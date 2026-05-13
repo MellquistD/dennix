@@ -4,7 +4,7 @@
   ...
 }: {
   # Standalone home manager config - Imports the configuration below it.
-  flake.homeConfigurations.jdenn = inputs.home-manger.lib.homeManagerConfiguration {
+  flake.homeConfigurations.jdenn = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = import inputs.nixpkgs {system = "x86_64-linux";};
     modules = [
       self.homeModules.jdenn
@@ -24,13 +24,30 @@
       hyprland
       hypridle
       hyprlock
+      ## Desktop keybind additions
+      audio-keybinds
+      brightness-keybinds
+      screen-record-wayland
 
-      # Apps
+      # Configured packages/apps
       chromium
+      git
+      rio
     ];
 
     home.packages = with pkgs; [
+      # Add one-shot packages that don't need config here
+      curl
+
+      # Other fonts we may want for compatability
+      twemoji-color-font
+      google-fonts
     ];
+
+    services = {
+      # Automount USB's
+      udiskie.enable = true;
+    };
 
     # Theme config
     catppuccin = {
@@ -39,8 +56,21 @@
       accent = "peach";
     };
 
+    # Fonts
+    fonts.fontconfig = {
+      enable = true;
+      defaultFonts = {
+        sansSerif = ["Product Sans"];
+        emoji = ["Twemoji"];
+      };
+    };
+
     # User-specific hyprland configuration
     wayland.windowManager.hyprland.settings = {
+      # Keyboard input
+      input = {
+        kb_layout = "dk";
+      };
       # Border colors
       general = {
         # `$peach` and `$base` come from Catppuccin.
@@ -49,13 +79,8 @@
       };
       # Apps
       "$terminal" = "rio";
-      "$menu" = "";
+      "$launcher" = "";
       "$lock" = "hyprlock";
-    };
-
-    services = {
-      # Automount USB's
-      udiskie.enable = true;
     };
 
     xdg.enable = true;

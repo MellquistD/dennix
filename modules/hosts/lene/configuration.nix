@@ -13,11 +13,26 @@
 
   # Actual nixos configuration
   flake.nixosModules.lene = {pkgs, ...}: {
-    imports = with self.nixosModules; [
+    imports = [
+      # Hardware configuration - Always needed.
+      # Describes the actual hardware of the system
       ./hardware-configuration.nix
-      hyprland
-      audio
+
+      # Hyprland system dependencies
+      self.nixosModules.hyprland
+
+      # Audio dependencies
+      self.nixosModules.audio
     ];
+
+    # Fonts
+    fonts = {
+      packages = with pkgs; [
+        twemoji-color-font
+        google-fonts
+        nerd-fonts.sauce-code-pro
+      ];
+    };
 
     # Networking
     networking = {
@@ -36,18 +51,16 @@
     boot = {
       loader = {
         systemd-boot.enable = true;
-        efi.canTouchEferVariables = true;
+        efi.canTouchEfiVariables = true;
       };
     };
 
     # Cleanup rules
     nix = {
-      # Try optimizing the nix store automatically
       optimise.automatic = true;
       gc = {
         automatic = true;
         randomizedDelaySec = "14m";
-        # Remove generations older than 10 days
         options = "--delete-older-than 10d";
       };
     };
