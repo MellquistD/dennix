@@ -49,6 +49,7 @@
       # Other fonts we may want for compatability
       twemoji-color-font # Emoji
       google-fonts # Big font collection
+      nemo
     ];
 
     services = {
