@@ -13,6 +13,10 @@ builtins.trace "LOADED HYPRLAND MODULE"
         portalPackage = pkgs.xdg-desktop-portal-hyprland;
       };
 
+      environment.variables = {
+        NIXOS_OZONE_WL = "1";
+      };
+
       xdg.portal = {
         enable = true;
         config = {
@@ -145,6 +149,8 @@ builtins.trace "LOADED HYPRLAND MODULE"
 
             # Environment
             env = [
+              # NIXOS
+              "NIXOS_OZONE_WL,1"
               # XDG
               "XDG_CURRENT_DESKTOP,Hyprland"
               "XDG_SESSION_TYPE,wayland"
