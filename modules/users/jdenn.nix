@@ -45,6 +45,7 @@
       # Add one-shot packages that don't need config here
       curl
       vscode # Vscode with no config managed by nix
+      discord
 
       # Other fonts we may want for compatability
       twemoji-color-font # Emoji
