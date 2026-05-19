@@ -40,6 +40,9 @@
       # Add any system-wide packages you might need here
       obsidian
       nodejs
+
+      ffmpeg                                                                                             
+      whisper-cpp
     ];
 
     # Fonts
