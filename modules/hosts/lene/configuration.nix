@@ -28,9 +28,18 @@
       audio
     ];
 
+    programs.bash.interactiveShellInit = ''
+    # Safely load API keys if the file exists
+    if [ -f "$HOME/.bash_secrets" ]; then
+      source "$HOME/.bash_secrets"
+    fi
+    '';
+
     # System packages
     environment.systemPackages = with pkgs; [
       # Add any system-wide packages you might need here
+      obsidian
+      nodejs
     ];
 
     # Fonts
